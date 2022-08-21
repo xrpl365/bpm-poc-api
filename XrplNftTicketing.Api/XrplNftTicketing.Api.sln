@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrplNftTicketing.Api", "XrplNftTicketing.Api.csproj", "{C1C044C2-8CC5-459B-A58B-07A3713161C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrplNftTicketing.Business", "..\XrplNftTicketing.Business\XrplNftTicketing.Business.csproj", "{8E2AC151-1272-48AF-96A0-3864C353DDFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XrplNftTicketing.Entities", "..\XrplNftTicketingI.Entities\XrplNftTicketing.Entities.csproj", "{A19ABA9E-12D2-493B-98D3-C72B24A84506}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1C044C2-8CC5-459B-A58B-07A3713161C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C044C2-8CC5-459B-A58B-07A3713161C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C044C2-8CC5-459B-A58B-07A3713161C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C044C2-8CC5-459B-A58B-07A3713161C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2AC151-1272-48AF-96A0-3864C353DDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2AC151-1272-48AF-96A0-3864C353DDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2AC151-1272-48AF-96A0-3864C353DDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2AC151-1272-48AF-96A0-3864C353DDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A19ABA9E-12D2-493B-98D3-C72B24A84506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A19ABA9E-12D2-493B-98D3-C72B24A84506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A19ABA9E-12D2-493B-98D3-C72B24A84506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A19ABA9E-12D2-493B-98D3-C72B24A84506}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0219DA5-6F36-4C8C-883E-65D78EC283A6}
+	EndGlobalSection
+EndGlobal

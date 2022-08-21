@@ -1,0 +1,14 @@
+C:\Dev\Events\EventsAPI.Entities\bin\Debug\netcoreapp3.1\EventsAPI.Entities.deps.json
+C:\Dev\Events\EventsAPI.Entities\bin\Debug\netcoreapp3.1\EventsAPI.Entities.dll
+C:\Dev\Events\EventsAPI.Entities\bin\Debug\netcoreapp3.1\EventsAPI.Entities.pdb
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.AssemblyInfoInputs.cache
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.AssemblyInfo.cs
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.csproj.CoreCompileInputs.cache
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.dll
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.pdb
+C:\Dev\Events\EventsAPI.Entities\bin\Debug\netcoreapp3.1\Xrpl.C.dll
+C:\Dev\Events\EventsAPI.Entities\bin\Debug\netcoreapp3.1\Xrpl.C.pdb
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.csproj.CopyComplete
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EventsAPI.Entities.csproj.AssemblyReference.cache
+C:\Dev\Events\EventsAPI.Entities\obj\Debug\netcoreapp3.1\EFCoreSqlServerNetTopologySuite.cs

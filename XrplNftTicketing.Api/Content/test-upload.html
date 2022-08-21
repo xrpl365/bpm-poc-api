@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function send() {
+
+            var payload = '{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket1.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}';
+
+            $('#target').html('sending..');
+
+            $.ajax({
+                url: '/EventImport/CreateEventTickets',
+                data: payload,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    $('#target').html(data.msg);
+                }
+            });
+        }
+    </script>
+
+
+</head>
+<body>
+
+    <form type="post">
+
+        
+
+        <input type="button" onclick="send()"/>
+
+    </form>
+</body>
+</html>
