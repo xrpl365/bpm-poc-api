@@ -143,7 +143,6 @@ namespace XrplNftTicketing.Business.Services
             var acceptOfferTransaction = new NFTokenAcceptOfferTransaction
             {
                 Account = wallet.Address,
-                NFTokenID = nfTokenID,
                 NFTokenBuyOffer = nftOfferIndex,
                 Sequence = accountInfo.AccountData.Sequence
             };
@@ -167,7 +166,8 @@ namespace XrplNftTicketing.Business.Services
 
             //# sign the transaction
             TxSigner signer = TxSigner.FromSecret(seed);  //secret is not sent to server, offline signing only
-            SignedTx signedTx = signer.SignJson(JObject.Parse(transactionJson));
+            var jobj = JObject.Parse(transactionJson);
+            SignedTx signedTx = signer.SignJson(jobj);
             //# submit the transaction
             SubmitBlobRequest request = new SubmitBlobRequest();
             request.TransactionBlob = signedTx.TxBlob;

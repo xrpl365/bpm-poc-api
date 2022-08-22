@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <Reference Include="Xrpl.C">
-      <HintPath>dlls\Xrpl.C.dll</HintPath>
+      <HintPath>..\Xrpl.C .Net Core Build Dll's\Xrpl.C.dll</HintPath>
     </Reference>
   </ItemGroup>
 

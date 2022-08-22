@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vPmLKCdwpUyh8rIyRm9+kaj6gnYJ0oF8CacJ8G615ZFqcQNFr9RwN2ECkUt7+QtBFY8h+4N9Jzv/Y3xebfFyJg==",
+  "dgSpecHash": "x3iyeesqMOVYNBVOe596oKBzLC2hqVw3xNJZZZHZ4WddKOq3WxZ43/JxcyIcxlyguc+GbbWOtFw+HMNL3CEIsg==",
   "success": true,
-  "projectFilePath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
+  "projectFilePath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marcu\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\marcu\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

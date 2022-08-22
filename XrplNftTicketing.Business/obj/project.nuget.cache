@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WSxLrP2Ui+WW6S+17fQGyxCgPVFJeM9KNIA7zM7kXy2/covZ0EFJAU94s4fgPORWp8/ATYK9ODbXx2m08UJWIQ==",
+  "dgSpecHash": "npOjMowpF+aEPUYB35IEbdtNPR8RIcUjDLmFU6VhXIFEIs7OPr5VxC9o5bwwm4aAvL5VYgRWhdu31GbFMCSInw==",
   "success": true,
-  "projectFilePath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
+  "projectFilePath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marcu\\.nuget\\packages\\bouncycastle.crypto.dll\\1.8.1\\bouncycastle.crypto.dll.1.8.1.nupkg.sha512",
     "C:\\Users\\marcu\\.nuget\\packages\\flurl\\3.0.0\\flurl.3.0.0.nupkg.sha512",

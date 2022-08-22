@@ -37,7 +37,6 @@ namespace XrplNftTicketing.Api.Controllers
         [HttpGet]
         public ActionResult HelloWorld()
         {
-            var tesJson = EventPayload.EventTestLoad();
             return new JsonResult("Hello World");
         }
         
@@ -70,21 +69,24 @@ namespace XrplNftTicketing.Api.Controllers
         public async Task<ActionResult> ClaimEventTicket(TicketClaimDto ticketClaim)
         {
 
-
-
             // Call method to claim tickets
-            if(ticketClaim.Guid.ToString() == "150c995c-43f8-4759-9065-94fc6bf82d41") // Hard coded for proof of concept
+            if(verifyClaimant(ticketClaim.NfTokenId, ticketClaim.Guid)) 
             {
                 // Guid matches...Offer should be created
                 var claimResult = await _xrplService.NfTokenAcceptBuyOffer(_xrplSettings.NftMintingAccountSeed, ticketClaim.NfTokenId, ticketClaim.NfTokenOfferIndex);
-                // Guid + Return Create Details
-                return Ok(ticketClaim.NfTokenId);
+                return Ok(claimResult);
 
             }
 
+            return BadRequest();
+        }
+        private bool verifyClaimant(string nfTokenId, Guid guid)
+        {
+            // Dummy coded for proof of concept
+            if (nfTokenId != null && guid.ToString() == "150c995c-43f8-4759-9065-94fc6bf82d41")
+                return true;
+
             throw new Exception("Invalid ticket claim guid");
-
-
         }
 
     }

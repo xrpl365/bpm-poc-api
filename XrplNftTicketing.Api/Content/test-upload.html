@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function send() {
+        function uploadEvent() {
 
             var payload = '{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket1.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}';
 
@@ -15,6 +15,24 @@
 
             $.ajax({
                 url: '/EventImport/CreateEventTickets',
+                data: payload,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    $('#target').html(data.msg);
+                }
+            });
+        }
+
+        function claimToken() {
+
+            var payload = '{"Guid": "150c995c-43f8-4759-9065-94fc6bf82d41", "NfTokenId": "000D047E53B5555086E999C9430B5AA3BEA44C749B6F562F258BA1B300000018", "NfTokenOfferIndex":"3895639D9707B91463DD7406CE78C0A6ACED18B0E3809F54D8EBF7CB3C2AAC68"}';
+
+            $('#target').html('sending..');
+
+            $.ajax({
+                url: '/EventImport/ClaimEventTicket',
                 data: payload,
                 type: 'post',
                 dataType: 'json',
@@ -32,9 +50,10 @@
 
     <form type="post">
 
-        
 
-        <input type="button" onclick="send()"/>
+
+        <input type="button" onclick="uploadEvent()" value="Upload Event" />
+        <input type="button" onclick="claimToken()" value="Claim Token" />
 
     </form>
 </body>

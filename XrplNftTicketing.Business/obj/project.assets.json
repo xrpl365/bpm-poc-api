@@ -5582,11 +5582,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
+      "projectUniqueName": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
       "projectName": "XrplNftTicketing.Business",
-      "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
+      "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketing.Business\\XrplNftTicketing.Business.csproj",
       "packagesPath": "C:\\Users\\marcu\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketing.Business\\obj\\",
+      "outputPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketing.Business\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\marcu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5603,8 +5603,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {
-              "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj"
+            "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {
+              "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj"
             }
           }
         }

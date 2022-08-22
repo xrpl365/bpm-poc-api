@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {}
+    "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {}
   },
   "projects": {
-    "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {
+    "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
+        "projectUniqueName": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
         "projectName": "XrplNftTicketing.Entities",
-        "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
+        "projectPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\XrplNftTicketing.Entities.csproj",
         "packagesPath": "C:\\Users\\marcu\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\XrplNftTicketingI.Entities\\obj\\",
+        "outputPath": "D:\\Dev\\Bpm-Poc\\XrplNftTicketing\\bpm-poc-api\\XrplNftTicketingI.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marcu\\AppData\\Roaming\\NuGet\\NuGet.Config",

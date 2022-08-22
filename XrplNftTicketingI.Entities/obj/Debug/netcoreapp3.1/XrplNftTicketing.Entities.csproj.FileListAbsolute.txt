@@ -40,3 +40,17 @@ D:\Dev\Bpm-Poc\XrplNftTicketing\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3
 D:\Dev\Bpm-Poc\XrplNftTicketing\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.csproj.CopyComplete
 D:\Dev\Bpm-Poc\XrplNftTicketing\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.dll
 D:\Dev\Bpm-Poc\XrplNftTicketing\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.pdb
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\bin\Debug\netcoreapp3.1\XrplNftTicketing.Entities.deps.json
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\bin\Debug\netcoreapp3.1\XrplNftTicketing.Entities.dll
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\bin\Debug\netcoreapp3.1\XrplNftTicketing.Entities.pdb
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\bin\Debug\netcoreapp3.1\Xrpl.C.dll
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\bin\Debug\netcoreapp3.1\Xrpl.C.pdb
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.csproj.AssemblyReference.cache
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.AssemblyInfoInputs.cache
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.AssemblyInfo.cs
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.csproj.CoreCompileInputs.cache
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\EFCoreSqlServerNetTopologySuite.cs
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.csproj.CopyComplete
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.dll
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketingI.Entities\obj\Debug\netcoreapp3.1\XrplNftTicketing.Entities.pdb
