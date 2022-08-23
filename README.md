@@ -1,7 +1,7 @@
 # bpm-poc-api
 
 
-This Dot Net solutions will run in Visual Studio Code 2022. A fork has been taken of the Xrpl.c codebase. 
+This Dot Net solutions will run in Visual Studio Code 2022. A fork has been taken of the Xrpl.c codebase. Debug Dll versions of this are found within the codebase.
 
 Primarily to allow it to run in .Net Core, but some other changes have been made to enable NFT transactions.
 
