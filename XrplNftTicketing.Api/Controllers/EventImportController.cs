@@ -8,10 +8,12 @@ using System;
 using XrplNftTicketing.Business.Services;
 using XrplNftTicketing.Entities.Configurations;
 using XrplNftTicketing.Entities.DTOs;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace XrplNftTicketing.Api.Controllers
 {
-
 
 
     //[Authorize]
@@ -24,9 +26,11 @@ namespace XrplNftTicketing.Api.Controllers
         private readonly IXrplService _xrplService;
         private readonly XrplSettings _xrplSettings;
         private readonly ILogger<EventImportController> _logger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EventImportController(IOptions<XrplSettings> xrplSettings, IIpfsService ipfsService, IXrplService xrplService, ILogger<EventImportController> logger)
+        public EventImportController(IWebHostEnvironment webHostEnvironment, IOptions<XrplSettings> xrplSettings, IIpfsService ipfsService, IXrplService xrplService, ILogger<EventImportController> logger)
         {
+            _webHostEnvironment = webHostEnvironment;
             _xrplSettings = xrplSettings.Value;
             _ipfsService = ipfsService;
             _xrplService = xrplService;
@@ -49,8 +53,9 @@ namespace XrplNftTicketing.Api.Controllers
             {
                 _logger.LogTrace("Create event called");
 
-               // Call method to create tickets
-               var result = await XrplNfTokenCreationService.CreateNftTickets(_xrplSettings, eventPayload, _ipfsService, _xrplService);
+                // Call method to create tickets
+                var resourcePath = $"{ _webHostEnvironment.ContentRootPath}{ @"\Content\Images\"}";
+                var result = await XrplNfTokenCreationService.CreateNftTickets(_xrplSettings, eventPayload, _ipfsService, _xrplService, resourcePath);
 
                 // Return Claim Ticket Details
                 return Ok(result);

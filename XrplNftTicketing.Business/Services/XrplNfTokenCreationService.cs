@@ -19,13 +19,13 @@ namespace XrplNftTicketing.Business.Services
         /// <param name="ipfsService"></param>
         /// <param name="xrplService"></param>
         /// <returns></returns>
-        public static async Task<List<TicketClaimDto>> CreateNftTickets(XrplSettings xrplSettings, EventPayload eventPayload, IIpfsService ipfsService, IXrplService xrplService)
+        public static async Task<List<TicketClaimDto>> CreateNftTickets(XrplSettings xrplSettings, EventPayload eventPayload, IIpfsService ipfsService, IXrplService xrplService, string resourcePath)
         {
             // Transform payload to Meta data Structure 
             var ticketMetaDataCollection = TicketMetaDTOFactory.GetTicketMetaDataBy(eventPayload);
 
             // Create Ticket Images on IPFS 
-            object p = await ticketMetaDataCollection.UploadImagesToIpfs(ipfsService);
+            object p = await ticketMetaDataCollection.UploadImagesToIpfs(ipfsService, resourcePath);
 
             // upload meta data to ipfs
             await ticketMetaDataCollection.UploadMetaDataToIpfs(ipfsService);

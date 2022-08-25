@@ -35,11 +35,11 @@ namespace XrplNftTicketing.Business.Helpers
         /// <param name="tickets"></param>
         /// <param name="ipfsService"></param>
         /// <returns></returns>
-        public static async Task<bool> UploadImagesToIpfs(this List<TicketMetaDTO> tickets, IIpfsService ipfsService)
+        public static async Task<bool> UploadImagesToIpfs(this List<TicketMetaDTO> tickets, IIpfsService ipfsService, string resourcePath)
         {
             foreach(var ticket in tickets)
             {
-                var byteData = ipfsService.GetImageBytes(ticket.OriginalImgUrl);
+                var byteData = TicketCreationService.CreateBasicTicketImage(ticket, 640, 280, resourcePath);
                 ticket.Image  = await ipfsService.UploadFile(ticket.ImgFileName, byteData);
             }
             return true;
@@ -77,16 +77,15 @@ namespace XrplNftTicketing.Business.Helpers
 
             foreach (var ticket in tickets)
             {
-                var json = JsonConvert.SerializeObject(ticket, Formatting.Indented);
+                //var json = JsonConvert.SerializeObject(ticket, Formatting.Indented);
                 var mintTxnResult = await xrplService.MintNfToken(walletSeed, null, ticket.IpfsMetaHash, transFerFee, mintFlags);
 
                 // Lookup Created Token Id
                 Meta txnMetaData = null;
-                ITransactionResponseCommon txnResponse = null;
                 while (txnMetaData == null)
                 {
                     // wait for trans detail to return meta data
-                    txnResponse = await xrplService.TransactionDetail(mintTxnResult.Transaction.Hash);
+                    ITransactionResponseCommon txnResponse = await xrplService.TransactionDetail(mintTxnResult.Transaction.Hash);
                     txnMetaData = txnResponse.Meta;
                 }
                 var nfToken = xrplService.GetNfTokenFromMetaData(txnMetaData, ticket.IpfsMetaHash);

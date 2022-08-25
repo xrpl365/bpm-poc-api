@@ -17,21 +17,21 @@ namespace XrplNftTicketing.Entities.DTOs.ImportPayloads
 
         public EventPayload() { }
 
-        public static string EventTestLoad()
+        public static EventPayload EventTestLoad()
         {
-            var ticketImport = new EventPayload()
+            return new EventPayload()
             {
 
-                    Name = "Sounds Live",
-                    StartDate = new DateTime(2022, 12, 01, 18, 00, 00),
-                    EndDate = new DateTime(2022, 12, 01, 23, 23, 00),
-                    VenueName = "Parr Hall",
-                    VenueAddress = "Palmyra Square S,Warrington, WA1 1BL",
-                    PromoterName = "ABC Promotions Live",
-                    TermsAndConditions = "Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\n" +
-                    "\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here." +
-                    "\n2. Nobody will be allowed admission to the Event without a valid ticket or pass"
-                ,
+                Name = "Sounds Live",
+                StartDate = new DateTime(2022, 12, 01, 18, 00, 00),
+                EndDate = new DateTime(2022, 12, 01, 23, 23, 00),
+                VenueName = "Parr Hall",
+                VenueAddress = "Palmyra Square S,Warrington, WA1 1BL",
+                PromoterName = "ABC Promotions Live",
+                TermsAndConditions = "Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\n" +
+                              "\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here." +
+                              "\n2. Nobody will be allowed admission to the Event without a valid ticket or pass"
+                          ,
                 Tickets = new List<TicketPayload>()
                 {
                     new TicketPayload()
@@ -53,8 +53,10 @@ namespace XrplNftTicketing.Entities.DTOs.ImportPayloads
 
                 }
             };
-
-            return JsonConvert.SerializeObject(ticketImport, Formatting.None);
+        }
+        public static string EventTestLoadJson()
+        {
+                 return JsonConvert.SerializeObject(EventTestLoad(), Formatting.None);
         }
     }
 }

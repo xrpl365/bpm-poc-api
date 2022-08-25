@@ -28,7 +28,10 @@ namespace XrplNftTicketing.Entities.DTOs
             [JsonProperty(PropertyName = "ticket-location")]
             public TicketLocationMetaDTO TicketLocation { get; set; }
 
- 
+            [JsonProperty(PropertyName = "promoter")]
+            public string Promoter { get; set; }
+
+
             [JsonProperty(PropertyName = "event")]
             public EventMetaDTO Event { get; set; }
 

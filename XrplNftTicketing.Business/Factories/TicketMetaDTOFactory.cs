@@ -26,8 +26,9 @@ namespace XrplNftTicketing.Business.Services
                     Price = new PriceMetaDTO() { OriginalPrice = evtTicket.Price.Value, CurrencyCode = evtTicket.Price.CurrencyCode },
                     SerialNumber = evtTicket.SerialNumber,
                     Venue = new Entities.DTOs.VenueMetaDTO() { Name = evnt.VenueName, Address = evnt.VenueAddress },
-                    TermsAndConditions = evtTicket.TermsAndConditions + " " + evtTicket.TermsAndConditions,
-                    TicketLocation = new TicketLocationMetaDTO() { Value = evtTicket.VenueAreaName }
+                    TermsAndConditions = evnt.TermsAndConditions + " " + evtTicket.TermsAndConditions,
+                    TicketLocation = new TicketLocationMetaDTO() { Value = evtTicket.VenueAreaName },
+                    Promoter = evnt.PromoterName
                 });
 
             }
