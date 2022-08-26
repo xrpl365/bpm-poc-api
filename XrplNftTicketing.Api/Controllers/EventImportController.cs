@@ -11,6 +11,7 @@ using XrplNftTicketing.Entities.DTOs;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Collections.Generic;
 
 namespace XrplNftTicketing.Api.Controllers
 {
@@ -37,11 +38,14 @@ namespace XrplNftTicketing.Api.Controllers
             _logger = logger;
         }
 
-        
-        [HttpGet]
-        public ActionResult HelloWorld()
+        /// <summary>
+        /// function for app demo use only
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetUserConfigSettings")]
+        public ActionResult GetUserConfigSettings()
         {
-            return new JsonResult("Hello World");
+            return new JsonResult(new List<string>() { _xrplSettings.WssUrl, _xrplSettings.UserAccountSeed } );
         }
         
 
@@ -64,25 +68,33 @@ namespace XrplNftTicketing.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An error occurred whilst trying to insert a new event");
+                var message = "An error occurred whilst trying to insert a new event." + ex.Message;
+                _logger.LogCritical(ex, message);
                 Response.StatusCode = 500;
-                return Content("An unexpected error occurred whilst inserting the event");
+                return Content(message);
             }
         }
 
         [HttpPost("ClaimEventTicket")]
         public async Task<ActionResult> ClaimEventTicket(TicketClaimDto ticketClaim)
         {
-
-            // Call method to claim tickets
-            if(verifyClaimant(ticketClaim.NfTokenId, ticketClaim.Guid)) 
+            try
             {
-                // Guid matches...Offer should be created
-                var claimResult = await _xrplService.NfTokenAcceptBuyOffer(_xrplSettings.NftMintingAccountSeed, ticketClaim.NfTokenId, ticketClaim.NfTokenOfferIndex);
-                return Ok(claimResult);
-
+                // Call method to claim tickets
+                if (verifyClaimant(ticketClaim.NfTokenId, ticketClaim.Guid)) 
+                {
+                    // Guid matches...Offer should be created
+                    var claimResult = await _xrplService.NfTokenAcceptBuyOffer(_xrplSettings.NftMintingAccountSeed, ticketClaim);
+                    return Ok(claimResult);
+                }
             }
-
+            catch (Exception ex)
+            {
+                var message = "An error occurred whilst trying to Claim Event Ticket." + ex.Message;
+                _logger.LogCritical(ex, message);
+                Response.StatusCode = 500;
+                return BadRequest(message);
+            }
             return BadRequest();
         }
         private bool verifyClaimant(string nfTokenId, Guid guid)

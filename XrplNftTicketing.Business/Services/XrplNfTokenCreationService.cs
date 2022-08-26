@@ -31,7 +31,7 @@ namespace XrplNftTicketing.Business.Services
             await ticketMetaDataCollection.UploadMetaDataToIpfs(ipfsService);
 
             // Create XRPL NFT's
-            var result = await ticketMetaDataCollection.MintTicketsToXrplNfts(xrplService, xrplSettings.NftMintingAccountSeed, xrplSettings.NftTransferFee);
+            var result = await ticketMetaDataCollection.MintTicketsToXrplNfts(xrplSettings, xrplService);
 
             return result;
 

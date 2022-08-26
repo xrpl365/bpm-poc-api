@@ -12,6 +12,7 @@ using XrplNftTicketing.Entities.Xrpl;
 using Ripple.Keypairs;
 using XrplNftTicketing.Business.Interfaces;
 using System.Linq;
+using XrplNftTicketing.Entities.DTOs;
 
 namespace XrplNftTicketing.Business.Services
 {
@@ -134,7 +135,7 @@ namespace XrplNftTicketing.Business.Services
         /// <param name="nfTokenID"></param>
         /// <param name="nftOfferIndex"></param>
         /// <returns></returns>
-        public async Task<string> NfTokenAcceptBuyOffer(string seed, string nfTokenID, string nftOfferIndex)
+        public async Task<bool> NfTokenAcceptBuyOffer(string seed, TicketClaimDto ticketClaim)
         {
             // Wallet is a signer
             var wallet = Wallet(seed);
@@ -143,13 +144,13 @@ namespace XrplNftTicketing.Business.Services
             var acceptOfferTransaction = new NFTokenAcceptOfferTransaction
             {
                 Account = wallet.Address,
-                NFTokenBuyOffer = nftOfferIndex,
+                NFTokenBuyOffer = ticketClaim.NfTokenOfferIndex,
                 Sequence = accountInfo.AccountData.Sequence
             };
 
             // send txn
             var txn = await sendTransaction(seed, acceptOfferTransaction.ToJson());
-            return nfTokenID;
+            return txn.EngineResult == "tesSUCCESS";
 
 
         } 

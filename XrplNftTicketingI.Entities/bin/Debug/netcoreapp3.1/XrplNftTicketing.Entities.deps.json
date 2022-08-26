@@ -9,8 +9,7 @@
       "XrplNftTicketing.Entities/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite": "5.0.9",
-          "Newtonsoft.Json": "13.0.1",
-          "Xrpl.C": "1.0.0.0"
+          "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "XrplNftTicketing.Entities.dll": {}
@@ -1007,14 +1006,6 @@
           "System.Xml.ReaderWriter": "4.3.0",
           "System.Xml.XmlDocument": "4.3.0"
         }
-      },
-      "Xrpl.C/1.0.0.0": {
-        "runtime": {
-          "Xrpl.C.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
       }
     }
   },
@@ -1681,11 +1672,6 @@
       "sha512": "sha512-MYoTCP7EZ98RrANESW05J5ZwskKDoN0AuZ06ZflnowE50LTpbR5yRg3tHckTVm5j/m47stuGgCrCHWePyHS70Q==",
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
-    },
-    "Xrpl.C/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/xrpl@2.2.3"></script>
+    <script src="Scripts/Xrpl.js"></script>
+
+    <script type="text/javascript">
+
+        if (typeof module !== "undefined") {
+            const xrpl = require('xrpl')
+        }
+
+
+        $(document).ready(function () {
+            getUserAccountSeed();
+        });
+
+       // Retrieves User Account seed from config
+       function getUserAccountSeed() {
+
+            $.ajax({
+                url: '/EventImport/GetUserConfigSettings',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    // Assign user wallet details
+                    wssNetwork = data[0];
+                    userAccountSeed = data[1];
+                    userWallet = xrpl.Wallet.fromSeed(userAccountSeed);
+                    userAccountAddress = userWallet.classicAddress;
+
+                }
+            });
+        }
+        function uploadEvent() {
+
+            //var payload = '{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket1.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}';
+            var payload = $('#AgencyUpload').val();
+
+            $.ajax({
+                url: '/EventImport/CreateEventTickets',
+                data: payload,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    var myClaim = data[0];
+                    $('#Guid').val(myClaim.guid);
+                    $('#NfTokenId').val(myClaim.nfTokenId);
+                    $('#NftIssuerAddress').val(myClaim.nftIssuerAddress);
+                    $('#CreateOfferValue').val(JSON.stringify(myClaim.createOfferValue));
+                    $(".stage2").show();
+                    $(".stage2").focus();
+                    alert("Upload complete.");
+                }
+            });
+        }
+
+        async function ticketClaim() {
+
+            $('#loader').show();
+
+            // Create offer
+            var guid = $('#Guid').val();
+            var issuerAddress = $('#NftIssuerAddress').val();
+            var tokenId = $('#NfTokenId').val();
+            var offerAmount = JSON.parse($('#CreateOfferValue').val());
+
+            await xrplConnect();
+
+            var offerCreateTx = await createBuyOffer(tokenId, issuerAddress, offerAmount);
+            var offers = await getBuyOffer(tokenId);
+            var createdOfferIdx = offers[0].nft_offer_index;
+
+
+            client.disconnect();
+
+
+            // Submit offer details to api
+            var apiPayload = {
+                "Guid": guid,
+                "Account": userAccountAddress,
+                "NfTokenId": tokenId,
+                "NfTokenOfferIndex": createdOfferIdx
+            };
+
+            $.ajax({
+                url: '/EventImport/ClaimEventTicket',
+                data: JSON.stringify(apiPayload),
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    alert("Transfer of NFT succeeded.");
+                    $('#loader').hide();
+                }
+            });
+        }
+
+        jQuery.ajaxSetup({
+            beforeSend: function () {
+                $('#loader').show();
+            },
+            complete: function () {
+                $('#loader').hide();
+            },
+            success: function () { }
+        });
+
+    </script>
+
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        form {
+            margin: 20px;
+            width: 600px;
+        }
+
+        .hidden {display:none;}
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            float: right;
+        }
+
+        textarea {
+            width: 90%;
+            height: 200px;
+            margin: 10px;
+        }
+
+        .stage {
+            margin-top: 20px;
+            float: left;
+            border-top: 1px solid silver;
+        }
+
+        .desc {
+            margin: 10px;
+            font-size: 0.8em;
+        }
+
+        .label {
+            width: 200px;
+            display: inline-block
+        }
+
+        .controls input {
+            width: 300px;
+        }
+
+        #loader {
+            position: fixed;
+            z-index: 999;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Application Demo</h1>
+    <form type="post">
+
+        <div id='loader'><img src="images/spinner.gif" /></div>
+
+        <div class="stage">
+            <h2>Stage 1 - Ticketing Agency Upload</h2>
+            <div class="desc">
+                <p>Stage 1 demonstates an upload to the system of external data from a ticketing agency. This can be done via a post of data to the API as simulated below.</p>
+
+                <p>Once upload is complete typically the application will return a QR code. The user will scan this barcode within the mobile wallet app to assign the ticket to their account.</p>
+
+            </div>
+            <textarea id="AgencyUpload">{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}</textarea>
+            <input type="button" class="button" onclick="uploadEvent()" value="Upload Event" />
+
+        </div>
+
+        <div id class="stage hidden stage2">
+
+            <h2>Stage 2 - Ticket Assignment to User</h2>
+            <div class="desc">
+                <p>The QR data is has been loaded into the form controls below.</p>
+
+                <p>The next step is for the client wallet to create an offer for the NFT ticket on the XRPL.</p>
+
+                <p>Upon offer creation, a post to the API service is made submit the offer details. The API will then verify & if OK and accept the offer and assign the ticket to the user.</p>
+            </div>
+            <div class="controls">
+                <div><span class="label">Guid:</span><input type="text" id="Guid" /></div>
+                <div><span class="label">NFToken Id:</span><input type="text" id="NfTokenId" /></div>
+                <div><span class="label">Nft Issuer Address:</span><input type="text" id="NftIssuerAddress" /></div>
+                <div><span class="label">Create Offer Value:</span><input type="text" id="CreateOfferValue" /></div>
+            </div>
+            <input type="button" class="button" onclick="ticketClaim()" value="Ticket Claim" />
+
+        </div>
+
+    </form>
+</body>
+</html>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xrpl.Client.Models.Transactions;
 using XrplNftTicketing.Entities.DTOs.ImportPayloads;
 using System;
+using XrplNftTicketing.Entities.Configurations;
 
 namespace XrplNftTicketing.Business.Helpers
 {
@@ -69,16 +70,16 @@ namespace XrplNftTicketing.Business.Helpers
         /// <param name="walletSeed"></param>
         /// <param name="transFerFee"></param>
         /// <returns></returns>
-        public static async Task<List<TicketClaimDto>> MintTicketsToXrplNfts(this List<TicketMetaDTO> tickets, IXrplService xrplService, string walletSeed, uint transFerFee)
+        public static async Task<List<TicketClaimDto>> MintTicketsToXrplNfts(this List<TicketMetaDTO> tickets, XrplSettings xrplSettings, IXrplService xrplService)
         {
             var mintFlags = NFTokenMintFlags.tfBurnable | NFTokenMintFlags.tfTransferable | NFTokenMintFlags.tfTrustLine;
             var nftTokensList = new List<TicketClaimDto>();
-            var issuerAddress = XrplService.GetWalletAddressFromSeed(walletSeed);
+            var issuerAddress = XrplService.GetWalletAddressFromSeed(xrplSettings.NftMintingAccountSeed);
 
             foreach (var ticket in tickets)
             {
                 //var json = JsonConvert.SerializeObject(ticket, Formatting.Indented);
-                var mintTxnResult = await xrplService.MintNfToken(walletSeed, null, ticket.IpfsMetaHash, transFerFee, mintFlags);
+                var mintTxnResult = await xrplService.MintNfToken(xrplSettings.NftMintingAccountSeed, null, ticket.IpfsMetaHash, xrplSettings.NftTransferFee, mintFlags);
 
                 // Lookup Created Token Id
                 Meta txnMetaData = null;
@@ -96,7 +97,7 @@ namespace XrplNftTicketing.Business.Helpers
                     Guid = Guid.Parse("150c995c-43f8-4759-9065-94fc6bf82d41"), // Hard coded for Proof of concepts // Guid.NewGuid(),
                     NftIssuerAddress = issuerAddress,
                     NfTokenId = nfToken.NFTokenID,
-                    CreateOfferValue = new Currency() { CurrencyCode = "Xrp", Value = 0.1M }
+                    CreateOfferValue = new Currency() { CurrencyCode = "Xrp", Value = xrplSettings.NftOfferAmount }
                 };
                 nftTokensList.Add(ticketClaim);
 
