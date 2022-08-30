@@ -4,6 +4,76 @@
     <meta charset="utf-8" />
     <title></title>
 
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        form {
+            margin: 20px;
+            width: 600px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            float: right;
+        }
+
+        textarea {
+            width: 90%;
+            height: 200px;
+            margin: 10px;
+        }
+
+        .stage {
+            margin-top: 20px;
+            float: left;
+            border-top: 1px solid silver;
+        }
+
+        .desc {
+            margin: 10px;
+            font-size: 0.8em;
+        }
+
+        .label {
+            width: 200px;
+            display: inline-block
+        }
+
+        .controls input {
+            width: 300px;
+        }
+
+        #loader {
+            position: fixed;
+            z-index: 999;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/xrpl@2.2.3"></script>
     <script src="Scripts/Xrpl.js"></script>
@@ -19,8 +89,8 @@
             getUserAccountSeed();
         });
 
-       // Retrieves User Account seed from config
-       function getUserAccountSeed() {
+        // Retrieves User Account seed from config
+        function getUserAccountSeed() {
 
             $.ajax({
                 url: '/EventImport/GetUserConfigSettings',
@@ -95,10 +165,32 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
+                    showTicketData();
+                    $(".stage3").show();
+                    $(".stage3").focus();
                     alert("Transfer of NFT succeeded.");
                     $('#loader').hide();
                 }
             });
+        }
+
+        // Enumerate tickets held by user and show links to meta data
+        async function showTicketData() {
+
+            var ul = $('#nft-collection');
+            ul.empty();
+
+            await xrplConnect();
+
+            var nfts = await getNfts(userAccountAddress);
+            client.disconnect();
+
+            for (var i = 0; i < nfts.result.account_nfts.length; i++) {
+                var nft = nfts.result.account_nfts[i];
+                var tokenId = nft.NFTokenID;
+                var metaUri = xrpl.convertHexToString(nft.URI, encoding = 'utf8');
+                ul.append($('<li>').append($('<a>').attr("target", "_blank").attr('href', 'https://cloudflare-ipfs.com/ipfs/' + metaUri).append(tokenId)));
+            }
         }
 
         jQuery.ajaxSetup({
@@ -113,79 +205,13 @@
 
     </script>
 
-    <style>
-        body {
-            font-family: Verdana, Geneva, Tahoma, sans-serif
-        }
-
-        form {
-            margin: 20px;
-            width: 600px;
-        }
-
-        .hidden {display:none;}
-
-        .button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-            float: right;
-        }
-
-        textarea {
-            width: 90%;
-            height: 200px;
-            margin: 10px;
-        }
-
-        .stage {
-            margin-top: 20px;
-            float: left;
-            border-top: 1px solid silver;
-        }
-
-        .desc {
-            margin: 10px;
-            font-size: 0.8em;
-        }
-
-        .label {
-            width: 200px;
-            display: inline-block
-        }
-
-        .controls input {
-            width: 300px;
-        }
-
-        #loader {
-            position: fixed;
-            z-index: 999;
-            overflow: show;
-            margin: auto;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 50px;
-            height: 50px;
-        }
-    </style>
 
 </head>
 <body>
     <h1>Application Demo</h1>
     <form type="post">
 
-        <div id='loader'><img src="images/spinner.gif" /></div>
+        <div id='loader'><span>Please wait... </span><img src="images/spinner.gif" /></div>
 
         <div class="stage">
             <h2>Stage 1 - Ticketing Agency Upload</h2>
@@ -219,6 +245,18 @@
             <input type="button" class="button" onclick="ticketClaim()" value="Ticket Claim" />
 
         </div>
+
+        <div class="stage hidden stage3">
+
+            <h2>Stage 3 - Show Users NFT / Tickets</h2>
+            <div class="desc"></div>
+            <div >
+                <ul id="nft-collection"></ul>
+            </div>
+
+        </div>
+
+
 
     </form>
 </body>

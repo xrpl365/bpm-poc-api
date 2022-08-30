@@ -285,8 +285,6 @@ D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netco
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\appsettings.json
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\XrplNftTicketing.Api.StaticWebAssets.xml
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\XrplNftTicketing.Api.exe
-D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\Content\Images\ticket1.png
-D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\Content\Images\ticket2.png
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\XrplNftTicketing.Api.deps.json
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\XrplNftTicketing.Api.runtimeconfig.json
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\XrplNftTicketing.Api.runtimeconfig.dev.json
@@ -368,3 +366,4 @@ D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netco
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.dll
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.pdb
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.genruntimeconfig.cache
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.MvcApplicationPartsAssemblyInfo.cs

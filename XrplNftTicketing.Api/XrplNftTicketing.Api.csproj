@@ -10,22 +10,6 @@
 
 
 	<ItemGroup>
-	  <None Remove="Content\Images\ticket1.png" />
-	  <None Remove="Content\Images\ticket2.png" />
-	</ItemGroup>
-
-
-	<ItemGroup>
-	  <Content Include="Content\Images\ticket1.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Content\Images\ticket2.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-
-	<ItemGroup>
 		<Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
 		<Content Update="nlog.devapps.config" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>

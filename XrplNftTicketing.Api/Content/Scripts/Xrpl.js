@@ -5,10 +5,8 @@ var wssNetwork = "";
 var client = null;
 
 async function xrplConnect() {
-
     client = new xrpl.Client(wssNetwork)
     await client.connect()
-
 }
 
 async function createBuyOffer(nfTokenID, owner, offerAmount) {
@@ -41,4 +39,11 @@ async function getBuyOffer(nftokenID) {
     return nftBuyOffers.result.offers;
 }
 
+async function getNfts(address) {
 
+    const nfts = await client.request({
+        method: "account_nfts",
+        account: address
+    })
+    return nfts;
+} 
