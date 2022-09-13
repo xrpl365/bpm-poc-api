@@ -70,6 +70,13 @@
             right: 0;
             width: 200px;
             height: 200px;
+            
+        }
+
+        #loader div {
+            background-color: #F1F2F3;
+            padding-top: 10px;
+            padding-left: 50px;
         }
     </style>
 
@@ -84,17 +91,31 @@
             const xrpl = require('xrpl')
         }
 
+        var agencyAccessToken;
+        var userAccessToken;
 
-        $(document).ready(function () {
-            getUserAccountSeed();
+        $(document).ready(async function () {
+
+            agencyAccessToken = await getAccessToken("agency@myageny.com", "mytestpassword");
+            getUserConfigSettings(agencyAccessToken.token);
         });
 
         // Retrieves User Account seed from config
-        function getUserAccountSeed() {
+        async function getAccessToken(emailAddress, password) {
+            return $.ajax({
+                type: "GET",
+                url: '/EventImport/GetAccessToken?emailAddress=' + emailAddress + '&password=' + password,
+                dataType: 'JSON'
+            });
+        }
+
+        // Retrieves user configs
+        function getUserConfigSettings(accessToken) {
 
             $.ajax({
                 url: '/EventImport/GetUserConfigSettings',
                 type: 'GET',
+                headers: { "Authorization": "Bearer " + accessToken },
                 contentType: 'application/json',
                 success: function (data) {
                     // Assign user wallet details
@@ -113,6 +134,7 @@
 
             $.ajax({
                 url: '/EventImport/CreateEventTickets',
+                headers: { "Authorization": "Bearer " + agencyAccessToken.token },
                 data: payload,
                 type: 'post',
                 dataType: 'json',
@@ -124,8 +146,8 @@
                     $('#NftIssuerAddress').val(myClaim.nftIssuerAddress);
                     $('#CreateOfferValue').val(JSON.stringify(myClaim.createOfferValue));
                     $(".stage2").show();
-                    $(".stage2").focus();
                     alert("Upload complete.");
+                    scrollTo("stage2");
                 }
             });
         }
@@ -133,6 +155,8 @@
         async function ticketClaim() {
 
             $('#loader').show();
+
+            userAccessToken = await getAccessToken("user@test.com", "mytestpassword");
 
             // Create offer
             var guid = $('#Guid').val();
@@ -142,7 +166,7 @@
 
             await xrplConnect();
 
-            var offerCreateTx = await createBuyOffer(tokenId, issuerAddress, offerAmount);
+            let offerCreateTx = await createBuyOffer(tokenId, issuerAddress, offerAmount);
             var offers = await getBuyOffer(tokenId);
             var createdOfferIdx = offers[0].nft_offer_index;
 
@@ -160,6 +184,7 @@
 
             $.ajax({
                 url: '/EventImport/ClaimEventTicket',
+                headers: { "Authorization": "Bearer " + userAccessToken.token },
                 data: JSON.stringify(apiPayload),
                 type: 'post',
                 dataType: 'json',
@@ -167,8 +192,8 @@
                 success: function (data) {
                     showTicketData();
                     $(".stage3").show();
-                    $(".stage3").focus();
                     alert("Transfer of NFT succeeded.");
+                    scrollTo("stage3");
                     $('#loader').hide();
                 }
             });
@@ -195,25 +220,27 @@
 
         jQuery.ajaxSetup({
             beforeSend: function () {
-                document.body.style.cursor = 'wait';
                 $('#loader').show();
             },
             complete: function () {
-                document.body.style.cursor = 'default';
                 $('#loader').hide();
             },
             success: function () { }
         });
+
+        function scrollTo(hash) {
+            location.hash = "#" + hash;
+        }
 
     </script>
 
 
 </head>
 <body>
-    <h1>Application Demo</h1>
+    <h1>XRPL NFT Ticketing - Application Demo</h1>
     <form type="post">
 
-        <div id='loader'><span>Please wait... </span><img src="images/spinner.gif" /></div>
+        <div id='loader'><div>Please wait... </div><img src="images/spinner.gif" /></div>
 
         <div class="stage">
             <h2>Stage 1 - Ticketing Agency Upload</h2>
@@ -229,8 +256,8 @@
         </div>
 
         <div id class="stage hidden stage2">
-
-            <h2>Stage 2 - Ticket Assignment to User</h2>
+            <h2 id="stage2">Stage 2 - Ticket Assignment to User</h2>
+     
             <div class="desc">
                 <p>The QR data is has been loaded into the form controls below.</p>
 
@@ -249,10 +276,10 @@
         </div>
 
         <div class="stage hidden stage3">
+            <h2 id="stage3">Stage 3 - Show Users NFT / Tickets</h2>
 
-            <h2>Stage 3 - Show Users NFT / Tickets</h2>
             <div class="desc"></div>
-            <div >
+            <div>
                 <ul id="nft-collection"></ul>
             </div>
 

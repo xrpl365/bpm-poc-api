@@ -367,3 +367,5 @@ D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netco
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.pdb
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.genruntimeconfig.cache
 D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\obj\Debug\netcoreapp3.1\XrplNftTicketing.Api.MvcApplicationPartsAssemblyInfo.cs
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Abstractions.dll
+D:\Dev\Bpm-Poc\XrplNftTicketing\bpm-poc-api\XrplNftTicketing.Api\bin\Debug\netcoreapp3.1\System.Text.Json.dll

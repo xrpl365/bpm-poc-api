@@ -8,10 +8,9 @@ using System;
 using XrplNftTicketing.Business.Services;
 using XrplNftTicketing.Entities.Configurations;
 using XrplNftTicketing.Entities.DTOs;
-using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace XrplNftTicketing.Api.Controllers
 {
@@ -23,14 +22,16 @@ namespace XrplNftTicketing.Api.Controllers
     public class EventImportController : ControllerBase
     {
 
+        private readonly IJwtService _jwtService;
         private readonly IIpfsService _ipfsService;
         private readonly IXrplService _xrplService;
         private readonly XrplSettings _xrplSettings;
         private readonly ILogger<EventImportController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EventImportController(IWebHostEnvironment webHostEnvironment, IOptions<XrplSettings> xrplSettings, IIpfsService ipfsService, IXrplService xrplService, ILogger<EventImportController> logger)
+        public EventImportController(IJwtService jwtService, IWebHostEnvironment webHostEnvironment, IOptions<XrplSettings> xrplSettings, IIpfsService ipfsService, IXrplService xrplService, ILogger<EventImportController> logger)
         {
+            _jwtService = jwtService;
             _webHostEnvironment = webHostEnvironment;
             _xrplSettings = xrplSettings.Value;
             _ipfsService = ipfsService;
@@ -39,16 +40,35 @@ namespace XrplNftTicketing.Api.Controllers
         }
 
         /// <summary>
+        /// For demo use only
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("GetAccessToken")]
+        public IActionResult GetAccessToken(string emailAddress, string password)
+        {
+            var tokenString = _jwtService.GenerateSecurityToken(emailAddress, password);
+            return Ok(new { token = tokenString });
+        }
+
+        /// <summary>
         /// function for app demo use only
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("GetUserConfigSettings")]
         public ActionResult GetUserConfigSettings()
         {
             return new JsonResult(new List<string>() { _xrplSettings.WssUrl, _xrplSettings.UserAccountSeed } );
         }
-        
 
+        /// <summary>
+        /// Accepts Json payload of event ticketing data
+        /// </summary>
+        /// <param name="eventPayload"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Agency")]
         [HttpPost("CreateEventTickets")]
         public async Task<ActionResult> CreateEventTickets(EventPayload eventPayload)
         {
@@ -75,6 +95,12 @@ namespace XrplNftTicketing.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Assigns NFT ticket to user account
+        /// </summary>
+        /// <param name="ticketClaim"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "User")]
         [HttpPost("ClaimEventTicket")]
         public async Task<ActionResult> ClaimEventTicket(TicketClaimDto ticketClaim)
         {

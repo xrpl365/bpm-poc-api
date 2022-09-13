@@ -69,6 +69,10 @@
               "target": "Package",
               "version": "[5.0.9, )"
             },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.23.1, )"
+            },
             "NLog": {
               "target": "Package",
               "version": "[4.6.8, )"
@@ -76,6 +80,10 @@
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.9.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.23.1, )"
             }
           },
           "imports": [
