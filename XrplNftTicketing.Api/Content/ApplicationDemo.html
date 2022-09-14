@@ -6,18 +6,32 @@
 
     <style>
         body {
-            font-family: Verdana, Geneva, Tahoma, sans-serif
+            margin: auto;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .content {
+            max-width: 1024px;
+            margin: auto;
+            padding-bottom: 500px;
+            background-image: url('Images/bpm-bg.png');
+            background-repeat: no-repeat;
+            background-position: right top;
+            min-height: 1000px;
         }
 
         form {
             margin: 20px;
-            width: 600px;
+            width: 100%;
+
         }
 
         .hidden {
             display: none;
         }
+        h1 {
 
+        }
         .button {
             background-color: #4CAF50; /* Green */
             border: none;
@@ -43,11 +57,14 @@
             margin-top: 20px;
             float: left;
             border-top: 1px solid silver;
+            text-align: center;
+            width: 90%;
         }
 
         .desc {
             margin: 10px;
             font-size: 0.8em;
+            text-align: left;
         }
 
         .label {
@@ -68,15 +85,21 @@
             left: 0;
             bottom: 0;
             right: 0;
-            width: 200px;
-            height: 200px;
-            
+            width: 400px;
+            height: 300px;
+            background-color: #F1F2F3;
         }
 
         #loader div {
-            background-color: #F1F2F3;
-            padding-top: 10px;
-            padding-left: 50px;
+            padding-top:10px;
+        }
+        .loader-message {
+            margin: auto;
+            text-align: center;
+        }
+        .spinner {
+            padding-top: 20px;
+            margin-left: 100px;
         }
     </style>
 
@@ -95,9 +118,10 @@
         var userAccessToken;
 
         $(document).ready(async function () {
-
+            $('#loader').show();
             agencyAccessToken = await getAccessToken("agency@myageny.com", "mytestpassword");
             getUserConfigSettings(agencyAccessToken.token);
+            $('#loader').hide();
         });
 
         // Retrieves User Account seed from config
@@ -131,6 +155,8 @@
 
             //var payload = '{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket1.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}';
             var payload = $('#AgencyUpload').val();
+            $(".loader-message").html("Uploading event ticket data.<br /><br />Please wait.");
+            $('#loader').show();
 
             $.ajax({
                 url: '/EventImport/CreateEventTickets',
@@ -146,14 +172,15 @@
                     $('#NftIssuerAddress').val(myClaim.nftIssuerAddress);
                     $('#CreateOfferValue').val(JSON.stringify(myClaim.createOfferValue));
                     $(".stage2").show();
-                    alert("Upload complete.");
                     scrollTo("stage2");
+                    $('#loader').hide();
                 }
             });
         }
 
         async function ticketClaim() {
 
+            $(".loader-message").html("Creating NFT ticket offer.<br /><br />Please wait.");
             $('#loader').show();
 
             userAccessToken = await getAccessToken("user@test.com", "mytestpassword");
@@ -168,11 +195,11 @@
 
             let offerCreateTx = await createBuyOffer(tokenId, issuerAddress, offerAmount);
             var offers = await getBuyOffer(tokenId);
+            $('#loader').show();
             var createdOfferIdx = offers[0].nft_offer_index;
-
-
             client.disconnect();
 
+            $(".loader-message").html("Sending offer to API for ticket claim.<br /><br />Please wait.");
 
             // Submit offer details to api
             var apiPayload = {
@@ -192,7 +219,6 @@
                 success: function (data) {
                     showTicketData();
                     $(".stage3").show();
-                    alert("Transfer of NFT succeeded.");
                     scrollTo("stage3");
                     $('#loader').hide();
                 }
@@ -218,16 +244,6 @@
             }
         }
 
-        jQuery.ajaxSetup({
-            beforeSend: function () {
-                $('#loader').show();
-            },
-            complete: function () {
-                $('#loader').hide();
-            },
-            success: function () { }
-        });
-
         function scrollTo(hash) {
             location.hash = "#" + hash;
         }
@@ -237,56 +253,73 @@
 
 </head>
 <body>
-    <h1>XRPL NFT Ticketing - Application Demo</h1>
-    <form type="post">
+    <div class="content">
+        <h1>XRPL NFT Ticketing - Application Demo</h1>
+        <form type="post">
 
-        <div id='loader'><div>Please wait... </div><img src="images/spinner.gif" /></div>
+            <div id='loader'><div class="loader-message">Please wait... </div><img class="spinner" src="images/spinner.gif" /></div>
 
-        <div class="stage">
-            <h2>Stage 1 - Ticketing Agency Upload</h2>
-            <div class="desc">
-                <p>Stage 1 demonstates an upload to the system of external data from a ticketing agency. This can be done via a post of data to the API as simulated below.</p>
-
-                <p>Once upload is complete typically the application will return a QR code. The user will scan this barcode within the mobile wallet app to assign the ticket to their account.</p>
+            <div class="stage">
+                <h2 id="stage1">Stage 1 - Ticketing Agency Upload</h2>
+                <div class="desc">
+                    <ul>
+                        <li>Stage 1 demonstates an upload to the system of purchased ticket data from a promoter or ticketing agency.</li>
+                        <li>This can be done via a post of data to the API as simulated below in the form below.</li>
+                    </ul>
+                </div>
+                <textarea id="AgencyUpload">{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}</textarea>
+                <input type="button" class="button" onclick="uploadEvent()" value=">> Upload Data" />
 
             </div>
-            <textarea id="AgencyUpload">{"Name":"Sounds Live","StartDate":"2022-12-01T18:00:00","EndDate":"2022-12-01T23:23:00","VenueName":"Parr Hall","VenueAddress":"Palmyra Square S,Warrington, WA1 1BL","PromoterName":"ABC Promotions Live","TermsAndConditions":"Tickets to this Event are issued on behalf of ABC Promotions Live and are subject to the following terms and conditions:\\n\\n1. In addition to those terms and conditions outlined below, any attendee of the Event agrees to the terms and conditions outlined by our ticket agent See Tickets here.\\n2. Nobody will be allowed admission to the Event without a valid ticket or pass","Tickets":[{"OwnerUserId":null,"SerialNumber":"000001","BookingNumber":"ASDAS65675","Price":{"CurrencyCode":"GBP","Value":25.0},"TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"},{"OwnerUserId":null,"SerialNumber":"000002","BookingNumber":"ASDAS65676","Price":{"CurrencyCode":"GBP","Value":25.0},"TicketImageUrl":"https://localhost:44379/Content/Images/ticket2.png","TermsAndConditions":null,"CustomText1":null,"CustomText2":null,"VenueAreaName":"Stalls","VenueSubAreaName":null,"Category":"General Standing"}]}</textarea>
-            <input type="button" class="button" onclick="uploadEvent()" value="Upload Event" />
 
-        </div>
+            <div id class="stage hidden stage2">
+                <h2 id="stage2">Stage 2 - Ticket Claim By User</h2>
 
-        <div id class="stage hidden stage2">
-            <h2 id="stage2">Stage 2 - Ticket Assignment to User</h2>
-     
-            <div class="desc">
-                <p>The QR data is has been loaded into the form controls below.</p>
+                <div class="desc">
+                    <ul>
+                        <li>
+                            Ticket purchasers (users) are sent QR codes. On receipt, the user will scan this code within their mobile wallet app
+                            to assign the ticket to their account.
+                        </li>
 
-                <p>The next step is for the client wallet to create an offer for the NFT ticket on the XRPL.</p>
+                        <li>For this demo, simulated QR data has has been loaded into the form controls below.</li>
 
-                <p>Upon offer creation, a post to the API service is made submit the offer details. The API will then verify & if OK and accept the offer and assign the ticket to the user.</p>
-            </div>
-            <div class="controls">
-                <div><span class="label">Guid:</span><input type="text" id="Guid" /></div>
-                <div><span class="label">NFToken Id:</span><input type="text" id="NfTokenId" /></div>
-                <div><span class="label">Nft Issuer Address:</span><input type="text" id="NftIssuerAddress" /></div>
-                <div><span class="label">Create Offer Value:</span><input type="text" id="CreateOfferValue" /></div>
-            </div>
-            <input type="button" class="button" onclick="ticketClaim()" value="Ticket Claim" />
+                        <li>The claim process involves the users mobile wallet app creating an offer for the NFT ticket on the XRPL.</li>
 
-        </div>
+                        <li>
+                            Upon offer creation, the user and offer data is posted to the API service. The API will then validate the request
+                            & if OK, accept the offer and thus assign the NFT ticket to the user on the XRPL.
+                        </li>
+                    </ul>
+                </div>
+                <div class="controls">
+                    <div><span class="label">Guid:</span><input type="text" id="Guid" /></div>
+                    <div><span class="label">NFToken Id:</span><input type="text" id="NfTokenId" /></div>
+                    <div><span class="label">Nft Issuer Address:</span><input type="text" id="NftIssuerAddress" /></div>
+                    <div><span class="label">Create Offer Value:</span><input type="text" id="CreateOfferValue" /></div>
+                </div>
+                <input type="button" class="button" onclick="ticketClaim()" value=">> Ticket Claim" />
 
-        <div class="stage hidden stage3">
-            <h2 id="stage3">Stage 3 - Show Users NFT / Tickets</h2>
-
-            <div class="desc"></div>
-            <div>
-                <ul id="nft-collection"></ul>
             </div>
 
-        </div>
+            <div class="stage hidden stage3">
+                <h2 id="stage3">Stage 3 - Show Users NFT / Tickets</h2>
+
+                <div class="desc">
+                    <ul>
+                        <li>The ticket has now been successfully claimed.</li>
+                        <li> Links below relate to the NFT meta data for the user account ticket(s).</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul id="nft-collection"></ul>
+                </div>
+
+            </div>
 
 
 
-    </form>
+        </form>
+    </div>
 </body>
 </html>

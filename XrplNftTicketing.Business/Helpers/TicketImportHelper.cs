@@ -72,7 +72,7 @@ namespace XrplNftTicketing.Business.Helpers
         /// <returns></returns>
         public static async Task<List<TicketClaimDto>> MintTicketsToXrplNfts(this List<TicketMetaDTO> tickets, XrplSettings xrplSettings, IXrplService xrplService)
         {
-            var mintFlags = NFTokenMintFlags.tfBurnable | NFTokenMintFlags.tfTransferable | NFTokenMintFlags.tfTrustLine;
+            var mintFlags = NFTokenMintFlags.tfBurnable | NFTokenMintFlags.tfTransferable;
             var nftTokensList = new List<TicketClaimDto>();
             var issuerAddress = XrplService.GetWalletAddressFromSeed(xrplSettings.NftMintingAccountSeed);
 
