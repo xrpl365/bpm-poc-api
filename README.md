@@ -7,6 +7,6 @@ Curent demo keys have been left in-place to make running easy. New keys can be o
 
 New keys can be entered into \XrplNftTicketing.Api\appsettings.json
 
-  - For Ipfs this app is currently using Pinata, and a free Pinata account can be used (https://app.pinata.cloud/) to get and set the key and secret in appsettings.json.
-  - An XRPL account seed from a test faucet account see: https://xrpl.org/xrp-testnet-faucet.html
+  - For Ipfs this app is currently using Pinata, and a free Pinata account can be used (https://app.pinata.cloud/) to get and set the key and secret in IpfsSettings.
+  - An XRPL account seed from a test faucet account see: https://xrpl.org/xrp-testnet-faucet.html and place in XrplSettings
 
